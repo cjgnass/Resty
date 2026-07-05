@@ -14,13 +14,20 @@ export default function ItemDetail() {
   const itemImage = item.image;
 
   return (
-    <>
-      <div>
-        <img src={itemImage} />
-        <div>{itemName}</div>
-        <div>{itemDescription}</div>
-        <button onClick={() => setDetailId(null)}>Close</button>
+    <div className="fixed inset-0 z-10 flex items-center justify-center bg-black/50">
+      <div className="w-100 border bg-white p-4 rounded-2xl">
+        <div className="flex justify-center">
+          <img src={itemImage} className="w-75 h-75" />
+        </div>
+        <div className="text-center">{itemName}</div>
+        <div className="text-center">{itemDescription}</div>
+        <button
+          onClick={() => setDetailId(null)}
+          className="w-full text-center"
+        >
+          Close
+        </button>
       </div>
-    </>
+    </div>
   );
 }

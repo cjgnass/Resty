@@ -17,9 +17,13 @@ export default function Menu() {
   }
   return (
     <>
-      <div className="text-center">Menu</div>
-      <div className="grid grid-cols-3 gap-4 ml-30 mr-30">{renderItems()}</div>
-      <div>{detailId !== null && <ItemDetail />}</div>
+      <div>
+        <div className="text-center">Menu</div>
+        <div className="grid grid-cols-3 gap-4 ml-30 mr-30">
+          {renderItems()}
+        </div>
+        <div>{detailId !== null && <ItemDetail />}</div>
+      </div>
     </>
   );
 }
