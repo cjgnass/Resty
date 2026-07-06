@@ -5,11 +5,13 @@ import Home from "@/pages/Home";
 import Menu from "@/pages/Menu";
 import Cart from "@/pages/Cart";
 import { ItemContext } from "@/contexts/ItemContext";
+import type { CartItem } from "@/contexts/ItemContext";
 
 function App() {
   const [detailId, setDetailId] = useState<number | null>(null);
   const [orderId, setOrderId] = useState<number | null>(null);
   const [cartId, setCartId] = useState<number | null>(null);
+  const [cartItems, setCartItems] = useState<CartItem[] | null>([]);
   return (
     <BrowserRouter>
       <ItemContext.Provider
@@ -20,6 +22,8 @@ function App() {
           setOrderId,
           cartId,
           setCartId,
+          cartItems,
+          setCartItems,
         }}
       >
         <Routes>
