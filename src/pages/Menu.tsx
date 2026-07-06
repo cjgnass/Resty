@@ -4,11 +4,12 @@ import { useContext } from "react";
 import type { ItemContextType } from "@/contexts/ItemContext";
 import { ItemContext } from "@/contexts/ItemContext";
 import ItemDetail from "@/components/ItemDetail";
+import Order from "@/components/Order";
 
 export default function Menu() {
   const itemContext = useContext<ItemContextType | undefined>(ItemContext);
   if (itemContext === undefined) return null;
-  const { detailId } = itemContext;
+  const { detailId, orderId } = itemContext;
 
   function renderItems() {
     return items.map((item, index) => {
@@ -22,7 +23,8 @@ export default function Menu() {
         <div className="grid grid-cols-3 gap-4 ml-30 mr-30">
           {renderItems()}
         </div>
-        <div>{detailId !== null && <ItemDetail />}</div>
+        {detailId !== null && <ItemDetail />}
+        {orderId !== null && <Order />}
       </div>
     </>
   );

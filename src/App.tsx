@@ -9,10 +9,18 @@ import { ItemContext } from "@/contexts/ItemContext";
 function App() {
   const [detailId, setDetailId] = useState<number | null>(null);
   const [orderId, setOrderId] = useState<number | null>(null);
+  const [cartId, setCartId] = useState<number | null>(null);
   return (
     <BrowserRouter>
       <ItemContext.Provider
-        value={{ detailId, setDetailId, orderId, setOrderId }}
+        value={{
+          detailId,
+          setDetailId,
+          orderId,
+          setOrderId,
+          cartId,
+          setCartId,
+        }}
       >
         <Routes>
           <Route element={<Layout />}>

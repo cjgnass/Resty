@@ -6,6 +6,8 @@ export type ItemContextType = {
   setDetailId: Dispatch<SetStateAction<number | null>>;
   orderId: number | null;
   setOrderId: Dispatch<SetStateAction<number | null>>;
+  cartId: number | null;
+  setCartId: Dispatch<SetStateAction<number | null>>;
 };
 
 export const ItemContext = createContext<ItemContextType | undefined>(
