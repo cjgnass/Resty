@@ -12,8 +12,8 @@ export default function Menu() {
   const { detailId, orderId } = itemContext;
 
   function renderItems() {
-    return items.map((item, index) => {
-      return <MenuItem itemId={index} />;
+    return items.map((_, index) => {
+      return <MenuItem itemId={index} key={index} />;
     });
   }
   return (
@@ -24,7 +24,7 @@ export default function Menu() {
           {renderItems()}
         </div>
         {detailId !== null && <ItemDetail />}
-        {orderId !== null && <Order />}
+        {orderId !== null && <Order itemId={orderId} notes={""} quantity={1} />}
       </div>
     </>
   );

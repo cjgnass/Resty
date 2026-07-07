@@ -1,55 +1,11 @@
-import { useContext, useState, useEffect } from "react";
-import type { ItemContextType, CartItem } from "@/contexts/ItemContext";
 import { ItemContext } from "@/contexts/ItemContext";
-import { items } from "@/items";
-import { useNavigate } from "react-router-dom";
+import type { ItemContextType } from "@/contexts/ItemContext";
+import { useContext } from "react";
 
-export type OrderProps = {
-  itemId: number;
-  quantity: number;
-  notes: string;
-};
-
-//remove props because I'm going to handle editing in a seperate component
-export default function Order({ itemId, quantity, notes }: OrderProps) {
-  const navigate = useNavigate();
-  const [newQuantity, setNewQuantity] = useState(quantity);
-  const [newNotes, setNewNotes] = useState(notes);
-  const itemContext = useContext<ItemContextType | undefined>(ItemContext);
+export default function EditItem() {
+  const itemContext = useContext(ItemContext);
   if (itemContext === undefined) return null;
-  const { orderId, setOrderId, setCartId, cartItems, setCartItems } =
-    itemContext;
-
-  const item = items[itemId];
-  const itemName = item?.name;
-  const itemImage = item?.image;
-  const itemPrice = item?.price;
-
-  function handleAddToCart() {
-    if (orderId === null) return null;
-    const itemToAdd: CartItem = {
-      itemId: orderId,
-      quantity,
-      notes,
-    };
-    if (cartItems === null || cartItems.length === 0) {
-      setCartItems([itemToAdd]);
-    } else {
-      setCartItems([...cartItems, itemToAdd]);
-    }
-    setOrderId(null);
-  }
-
-  function handleOrder() {
-    handleAddToCart();
-    navigate("/cart");
-  }
-
-  function handleClose() {
-    setOrderId(null);
-    setCartId(null);
-  }
-
+  // finish
   return (
     <div className="fixed inset-0 z-10 flex items-center justify-center bg-black/50">
       <div className="w-100 border bg-white p-4 rounded-2xl">
