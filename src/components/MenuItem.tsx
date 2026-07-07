@@ -10,7 +10,7 @@ type MenuItemProps = {
 export default function MenuItem({ itemId }: MenuItemProps) {
   const itemContext = useContext<ItemContextType | undefined>(ItemContext);
   if (itemContext === undefined) return null;
-  const { setDetailId, setOrderId } = itemContext;
+  const { setDetailId, setCurrOrderId: setOrderId } = itemContext;
   return (
     <>
       <div className="flex justify-center">

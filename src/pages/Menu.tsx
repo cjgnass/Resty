@@ -4,12 +4,12 @@ import { useContext } from "react";
 import type { ItemContextType } from "@/contexts/ItemContext";
 import { ItemContext } from "@/contexts/ItemContext";
 import ItemDetail from "@/components/ItemDetail";
-import Order from "@/components/Order";
+import OrderItem from "@/components/OrderItem";
 
 export default function Menu() {
   const itemContext = useContext<ItemContextType | undefined>(ItemContext);
   if (itemContext === undefined) return null;
-  const { detailId, orderId } = itemContext;
+  const { detailId, currOrderId: orderId } = itemContext;
 
   function renderItems() {
     return items.map((_, index) => {
@@ -24,7 +24,7 @@ export default function Menu() {
           {renderItems()}
         </div>
         {detailId !== null && <ItemDetail />}
-        {orderId !== null && <Order itemId={orderId} notes={""} quantity={1} />}
+        {orderId !== null && <OrderItem />}
       </div>
     </>
   );

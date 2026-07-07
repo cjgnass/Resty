@@ -10,10 +10,10 @@ export type CartItem = {
 export type ItemContextType = {
   detailId: number | null;
   setDetailId: Dispatch<SetStateAction<number | null>>;
-  orderId: number | null;
-  setOrderId: Dispatch<SetStateAction<number | null>>;
-  cartId: number | null;
-  setCartId: Dispatch<SetStateAction<number | null>>;
+  currOrderId: number | null;
+  setCurrOrderId: Dispatch<SetStateAction<number | null>>;
+  currCartId: number | null;
+  setCurrCartId: Dispatch<SetStateAction<number | null>>;
   cartItems: CartItem[] | null;
   setCartItems: Dispatch<SetStateAction<CartItem[] | null>>;
 };

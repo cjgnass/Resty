@@ -9,8 +9,8 @@ import type { CartItem } from "@/contexts/ItemContext";
 
 function App() {
   const [detailId, setDetailId] = useState<number | null>(null);
-  const [orderId, setOrderId] = useState<number | null>(null);
-  const [cartId, setCartId] = useState<number | null>(null);
+  const [currOrderId, setCurrOrderId] = useState<number | null>(null);
+  const [currCartId, setCurrCartId] = useState<number | null>(null);
   const [cartItems, setCartItems] = useState<CartItem[] | null>([]);
   return (
     <BrowserRouter>
@@ -18,10 +18,10 @@ function App() {
         value={{
           detailId,
           setDetailId,
-          orderId,
-          setOrderId,
-          cartId,
-          setCartId,
+          currOrderId,
+          setCurrOrderId,
+          currCartId,
+          setCurrCartId,
           cartItems,
           setCartItems,
         }}

@@ -3,30 +3,50 @@ import { ItemContext } from "@/contexts/ItemContext";
 import type { ItemContextType } from "@/contexts/ItemContext";
 // import { items } from "@/items";
 import CartItem from "@/components/CartItem";
-import Order from "@/components/Order";
+import EditItem from "@/components/EditItem";
 
 export default function Cart() {
   const itemContext = useContext<ItemContextType | undefined>(ItemContext);
   if (itemContext === undefined) return null;
-  const { cartId, cartItems } = itemContext;
+  const { currCartId, cartItems } = itemContext;
   function renderCartItems() {
     return cartItems?.map((_, index) => {
-      return <CartItem key={index} itemId={index} />;
+      return <CartItem key={index} cartId={index} />;
     });
   }
 
-  function renderOrder() {
+  function renderEditItem() {
     if (cartItems === null || cartItems.length === 0) {
       return null;
     }
-    if (cartId === null) return null;
-    const { itemId, quantity, notes } = cartItems[cartId];
-    return <Order itemId={itemId} quantity={quantity} notes={notes ?? ""} />;
+    if (currCartId === null) return null;
+    const cartItem = cartItems[currCartId];
+    const itemId = cartItem.itemId;
+    const itemQuantity = cartItem.quantity;
+    const itemNotes = cartItem.notes ?? "";
+
+    return (
+      <EditItem itemId={itemId} quantity={itemQuantity} notes={itemNotes} />
+    );
   }
+
+  function handleSubmit() {
+    console.log(cartItems);
+  }
+
   return (
     <>
       <div>{renderCartItems()}</div>
-      {cartId !== null && renderOrder()}
+      <div className="flex justify-center">
+        <button
+          onClick={handleSubmit}
+          className="text-center m-4 p-4 border rounded-2xl"
+        >
+          Submit Order
+        </button>
+      </div>
+
+      {currCartId !== null && renderEditItem()}
     </>
   );
 }

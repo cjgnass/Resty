@@ -1,11 +1,51 @@
 import { ItemContext } from "@/contexts/ItemContext";
-import type { ItemContextType } from "@/contexts/ItemContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import { items } from "@/items";
 
-export default function EditItem() {
+export type EditItemProps = {
+  itemId: number;
+  quantity: number;
+  notes: string;
+};
+
+export default function EditItem({ itemId, quantity, notes }: EditItemProps) {
   const itemContext = useContext(ItemContext);
+  const [newQuantity, setNewQuantity] = useState(quantity);
+  const [newNotes, setNewNotes] = useState(notes);
   if (itemContext === undefined) return null;
-  // finish
+  const { cartItems, setCartItems, currCartId, setCurrCartId } = itemContext;
+  const item = items[itemId];
+  const itemName = item.name;
+  const itemImage = item.image;
+  const itemPrice = item.price;
+
+  function handleRemove() {
+    if (cartItems === null) return;
+    setCartItems(cartItems.filter((_, i) => i !== currCartId));
+    setCurrCartId(null);
+  }
+  function handleDone() {
+    if (cartItems === null) return;
+    console.log("done");
+    setCartItems(
+      cartItems.map((cartItem, i) => {
+        if (i === currCartId) {
+          return {
+            itemId,
+            quantity: newQuantity,
+            notes: newNotes,
+          };
+        } else {
+          return cartItem;
+        }
+      }),
+    );
+    setCurrCartId(null);
+  }
+  function handleClose() {
+    setCurrCartId(null);
+  }
+
   return (
     <div className="fixed inset-0 z-10 flex items-center justify-center bg-black/50">
       <div className="w-100 border bg-white p-4 rounded-2xl">
@@ -35,11 +75,11 @@ export default function EditItem() {
           />
         </div>
         <div className="w-full flex justify-around">
-          <button onClick={handleAddToCart} className="border w-full">
-            Add to cart
+          <button onClick={handleRemove} className="border w-full">
+            Remove
           </button>
-          <button onClick={handleOrder} className="border w-full">
-            Order
+          <button onClick={handleDone} className="border w-full">
+            Done
           </button>
         </div>
 

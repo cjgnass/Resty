@@ -1,34 +1,34 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import type { ItemContextType, CartItem } from "@/contexts/ItemContext";
 import { ItemContext } from "@/contexts/ItemContext";
 import { items } from "@/items";
 import { useNavigate } from "react-router-dom";
 
-export type OrderProps = {
-  itemId: number;
-  quantity: number;
-  notes: string;
-};
-
 //remove props because I'm going to handle editing in a seperate component
-export default function Order({ itemId, quantity, notes }: OrderProps) {
+export default function OrderItem() {
   const navigate = useNavigate();
-  const [newQuantity, setNewQuantity] = useState(quantity);
-  const [newNotes, setNewNotes] = useState(notes);
+  const [quantity, setQuantity] = useState(1);
+  const [notes, setNotes] = useState("");
   const itemContext = useContext<ItemContextType | undefined>(ItemContext);
   if (itemContext === undefined) return null;
-  const { orderId, setOrderId, setCartId, cartItems, setCartItems } =
-    itemContext;
+  const {
+    currOrderId,
+    setCurrOrderId,
+    setCurrCartId,
+    cartItems,
+    setCartItems,
+  } = itemContext;
+  if (currOrderId === null) return;
 
-  const item = items[itemId];
+  const item = items[currOrderId];
   const itemName = item?.name;
   const itemImage = item?.image;
   const itemPrice = item?.price;
 
   function handleAddToCart() {
-    if (orderId === null) return null;
+    if (currOrderId === null) return null;
     const itemToAdd: CartItem = {
-      itemId: orderId,
+      itemId: currOrderId,
       quantity,
       notes,
     };
@@ -37,7 +37,7 @@ export default function Order({ itemId, quantity, notes }: OrderProps) {
     } else {
       setCartItems([...cartItems, itemToAdd]);
     }
-    setOrderId(null);
+    setCurrOrderId(null);
   }
 
   function handleOrder() {
@@ -46,8 +46,8 @@ export default function Order({ itemId, quantity, notes }: OrderProps) {
   }
 
   function handleClose() {
-    setOrderId(null);
-    setCartId(null);
+    setCurrOrderId(null);
+    setCurrCartId(null);
   }
 
   return (
@@ -64,8 +64,8 @@ export default function Order({ itemId, quantity, notes }: OrderProps) {
             type="number"
             min="1"
             step="1"
-            value={newQuantity}
-            onChange={(e) => setNewQuantity(Number(e.target.value))}
+            value={quantity}
+            onChange={(e) => setQuantity(Number(e.target.value))}
             className="border text-center w-10 ml-1"
           />
         </div>
@@ -73,8 +73,8 @@ export default function Order({ itemId, quantity, notes }: OrderProps) {
         <div className="w-full flex justify-center m-1">
           <input
             type="text"
-            value={newNotes}
-            onChange={(e) => setNewNotes(e.target.value)}
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
             className="border w-75 h-50"
           />
         </div>
