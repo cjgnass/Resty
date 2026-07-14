@@ -4,7 +4,7 @@ import type { ItemContextType } from "@/contexts/ItemContext";
 import { items } from "@/items";
 import CartItem from "@/components/CartItem";
 import EditItem from "@/components/EditItem";
-import { submitOrder } from "@/api";
+import { checkout } from "@/api";
 
 export default function Cart() {
   const itemContext = useContext<ItemContextType | undefined>(ItemContext);
@@ -31,17 +31,18 @@ export default function Cart() {
     );
   }
 
-  async function handleSubmit() {
+  async function handleCheckout() {
     if (cartItems === null) return;
     const cart = cartItems.map((cartItem) => {
       return {
         item: items[cartItem.itemId].name,
         quantity: cartItem.quantity,
         notes: cartItem.notes,
+        priceId: "price",
       };
     });
     const order = JSON.stringify(cart);
-    const response = await submitOrder(order);
+    const response = await checkout(order);
     console.log(response);
   }
 
@@ -50,10 +51,10 @@ export default function Cart() {
       <div>{renderCartItems()}</div>
       <div className="flex justify-center">
         <button
-          onClick={handleSubmit}
+          onClick={handleCheckout}
           className="text-center m-4 p-4 border rounded-2xl"
         >
-          Submit Order
+          Checkout
         </button>
       </div>
 

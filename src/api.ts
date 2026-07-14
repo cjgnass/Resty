@@ -12,14 +12,13 @@ export async function getCsrfToken() {
   return getCookie("csrftoken");
 }
 
-export async function submitOrder(order: string) {
+export async function checkout(order: string) {
   const csrfToken = await getCsrfToken();
-  console.log(csrfToken);
   if (csrfToken === undefined) {
     throw new Error("CSRF token not found");
   }
   const response = await fetch(
-    "http://localhost:8000/api/restaurant/submit-order",
+    "http://localhost:8000/api/restaurant/checkout",
     {
       method: "POST",
       credentials: "include",
@@ -30,5 +29,11 @@ export async function submitOrder(order: string) {
       body: order,
     },
   );
-  return response.json();
+
+  const { url, error } = await response.json();
+  console.log(url);
+  if (!response.ok) {
+    throw new Error(error);
+  }
+  window.location.assign(url);
 }
