@@ -32,13 +32,13 @@ export default function Cart() {
   }
 
   async function handleCheckout() {
-    if (cartItems === null) return;
+    if (cartItems === null || cartItems.length === 0) return;
     const cart = cartItems.map((cartItem) => {
       return {
         item: items[cartItem.itemId].name,
         quantity: cartItem.quantity,
         notes: cartItem.notes,
-        priceId: "price",
+        stripeId: items[cartItem.itemId].stripeId,
       };
     });
     const order = JSON.stringify(cart);
