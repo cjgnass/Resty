@@ -31,7 +31,6 @@ export async function checkout(order: string) {
   );
 
   const { url, error } = await response.json();
-  console.log(url);
   if (!response.ok) {
     throw new Error(error);
   }
